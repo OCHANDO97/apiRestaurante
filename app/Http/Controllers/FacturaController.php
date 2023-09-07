@@ -62,7 +62,6 @@ class FacturaController extends Controller
         $facturaReciente = Factura::where('idMesa', $mesaID)->orderBy('fecha_Hora', 'desc')->first();
         $facturaIDreciente = $facturaReciente->idFacturas;
         
-
         // Buscar la factura y la carta en la base de datos
         $factura = Factura::find($facturaIDreciente);
         $producto = Producto::find($productoID);
