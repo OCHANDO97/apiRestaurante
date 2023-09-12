@@ -32,20 +32,7 @@ class AuthController extends Controller
 
     }
 
-    // function login(Request $request) 
-    // {
-    //     if (!Auth::attempt($request->only('usuario','password'))) {
-    //         return response()->json(['success' => false,401]);
-    //     }
-    //     $user = User::where('usuario', $request['usuario'])->firstOrFail();
-    //     $token = $user->createToken('auth_token')->plainTextToken;
-        
-    //     return response()->json([
-    //         'tokenType' => $token
-    //     ]);
-
-
-    // }
+    
     function login(Request $request) 
     {
         $user = User::where('usuario', $request['usuario'])->firstOrFail();

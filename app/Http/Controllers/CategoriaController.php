@@ -7,7 +7,7 @@ use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
-    function showCategorias()  {
+    function index()  {
 
         return response()->json([
             'categorias' => Categoria::get()

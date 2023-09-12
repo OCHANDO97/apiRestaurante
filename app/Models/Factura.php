@@ -16,8 +16,7 @@ class Factura extends Model
         return $this->belongsTo(Mesa::class, 'idFacturas', 'idMesa');
     }
 
-    public function facturas_productos()
-    {
+    public function facturas_productos(){
         return $this->belongsToMany(Producto::class, 'facturas_productos', 'idFacturas', 'idProducto');
     }
 }

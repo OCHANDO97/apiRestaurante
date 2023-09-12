@@ -7,7 +7,7 @@ use App\Models\Producto;
 
 class ProductoController extends Controller
 {
-    function showCarta($id) {
+    function show($id) {
 
         return response()->json(Producto::where('idCategoria', $id)->get());
         }

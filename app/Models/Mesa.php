@@ -11,7 +11,9 @@ class Mesa extends Model
     public $timestamps = false;
     protected $primaryKey = 'idMesa';
     protected $table = 'mesas';
-
+    protected $fillable = [
+        'disponible',
+    ];
     public function factura(){
         return $this->hasMany(Factura::class, 'Facturas');
     }

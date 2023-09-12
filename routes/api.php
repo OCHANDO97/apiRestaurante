@@ -3,11 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\MesaController;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\RoleManagementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,35 +30,25 @@ use App\Http\Controllers\RoleManagementController;
 Route::post('login',[AuthController::class,'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    
+    Route::get('logout',[AuthController::class,'logout']);
+
     Route::group(['middleware' => ['role:admin']], function () {
         Route::post('register',[AuthController::class,'register']);
         Route::post('createRole',[RoleManagementController::class,'createRole']);
         Route::post('asignaRole',[RoleManagementController::class,'asignaRole']);
-
     });
-
-    Route::get('logout',[AuthController::class,'logout']);
 
     // facturas
-    Route::controller(FacturaController::class)->group(function () {
-        Route::get('showFacturas', 'showFacturas');
-        Route::get('buscarFactura/{id}','buscarFactura');
-        Route::post('addFacturaMesa','addFacturaMesa');
-        Route::post('addProductoMesa','addProductoMesa');
-    });
-
+    Route::apiResource('factura/mesa/{mesa}', FacturaController::class)->only(['store']);
+    Route::apiResource('factura', FacturaController::class);
+    Route::post('factura/mesa/{mesa}/addProducto/{producto}', [FacturaController::class,'addProductoToFacturaOnMesa']);
     // categorias
-    Route::get('showCategorias',[CategoriaController::class,'showCategorias']);
+    Route::apiResource('categorias', CategoriaController::class);
     // Producto
-    Route::get('listarProductoCategorias/{id}',[ProductoController::class,'showCarta']);
-
+    Route::apiResource('productos', ProductoController::class);
     // mesas
-    Route::controller(MesaController::class)->group(function () {
-        Route::get('showMesas','showMesas');
-        Route::get('showDisponibilidad','showDisponibilidad');
-        Route::put('editarDisponibilidad/{id}','editarDisponibilidad');
-    });
+    Route::apiResource('mesa', MesaController::class);
+
 
 });
 
